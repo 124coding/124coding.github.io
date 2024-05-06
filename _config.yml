@@ -115,7 +115,7 @@ author:
   name             : "Hello!"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "I am a basic person."
-  location         : "**Korea**"
+  location         : "Korea"
   email            : "s71629@naver.com"
   links:
     - label: "Email"
