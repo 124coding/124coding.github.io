@@ -1,2 +1,7 @@
 source "https://rubygems.org"
-gemspec
+gemspecs
+
+gem "webrick", "~> 1.8"
+gem "minimal-mistakes-jekyll"
+
+gem "tzinfo", "~> 2.0"

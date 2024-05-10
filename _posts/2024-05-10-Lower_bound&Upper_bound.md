@@ -1,6 +1,7 @@
 ---
 layout: single
 title:  "Lower_bound, Upper_bound"
+categories: algorithm
 ---
 
 Lower_bound, Upper_bound 개념
