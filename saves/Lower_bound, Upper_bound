@@ -35,4 +35,5 @@ Lower_bound의 예시를 들면
   8
 
 #Lower_bound 과정 시각화
-알고리즘을 시각화한 과정을 보여주면
+처음 start = 0, end = 8, mid = (8 + 0) / 2를 갖습니다.
+![캡처](https://github.com/124coding/124coding.github.io/assets/114299892/26047666-e414-45e7-a599-13cac63bf846)
