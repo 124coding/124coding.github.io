@@ -48,15 +48,15 @@ Lower_bound의 예시를 들면
 
 #Lower_bound 과정 시각화
 위의 과정 중 1번째 과정을 시각화하겠습니다.   
-처음 start = 0, end = 8, mid = (8 + 0) / 2를 갖습니다.
+처음 start = 0, end = 8, mid = (8 + 0) / 2를 갖습니다.   
 ![캡처](https://github.com/124coding/124coding.github.io/assets/114299892/26047666-e414-45e7-a599-13cac63bf846)   
 
-6은 key값과 같기에 end = mid가 됩니다.
-start = 0, end = 4, mid = (4 + 0) / 2
+6은 key값과 같기에 end = mid가 됩니다.   
+start = 0, end = 4, mid = (4 + 0) / 2   
 ![캡처](https://github.com/124coding/124coding.github.io/assets/114299892/d8c480c0-2b4f-4b9d-9aef-ad03b9f80520)   
 
-4는 key값 보다 작기에 start = mid + 1이 됩니다.
-start = 3, end = 4, mid = (3 + 4) / 2
+4는 key값 보다 작기에 start = mid + 1이 됩니다.   
+start = 3, end = 4, mid = (3 + 4) / 2   
 ![캡처](https://github.com/124coding/124coding.github.io/assets/114299892/78e5b4ad-3495-4fa6-9a7f-07a8cae9a1f7)   
 
 6은 key값과 같기에 end = mid가 됩니다.   
@@ -78,7 +78,7 @@ int lower_bound(int* arr, int key, int size) {
 
 Upper_bound
 -------------
-Upper_bound의 예시를 들면
+Upper_bound의 예시를 들면   
 * 입력
 ```
   8 <- 배열 크기
@@ -89,19 +89,19 @@ Upper_bound의 예시를 들면
 ```
   5
 ```
-값이 존재하는 경우를 제외하면 Lower_bound와 같은 리턴을 받습니다.
+값이 존재하는 경우를 제외하면 Lower_bound와 같은 리턴을 받습니다.   
 
 #Upper_bound 과정 시각화
 위의 과정을 시각화하면   
-처음 start = 0, end = 8, mid = (8 + 0) / 2를 갖습니다.
+처음 start = 0, end = 8, mid = (8 + 0) / 2를 갖습니다.   
 ![캡처](https://github.com/124coding/124coding.github.io/assets/114299892/26047666-e414-45e7-a599-13cac63bf846)   
 
 6은 key값과 같기에 start = mid + 1이 됩니다.   
-start = 5, end = 8, mid = (5 + 8) / 2가 됩니다.
+start = 5, end = 8, mid = (5 + 8) / 2가 됩니다.   
 ![캡처](https://github.com/124coding/124coding.github.io/assets/114299892/758e2e15-bdcb-4f0c-aacb-d6689643ad2b)   
 
 10은 key값보다 크기에 end = mid가 됩니다.   
-start = 5, end = 6, mid = (5 + 6) / 2가 됩니다.
+start = 5, end = 6, mid = (5 + 6) / 2가 됩니다.   
 ![캡처](https://github.com/124coding/124coding.github.io/assets/114299892/74d7ced1-d86c-48f9-a6d8-907b6f5b4bf0)   
 
 7은 key값보다 크기에 end = mid가 됩니다.   
