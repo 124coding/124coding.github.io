@@ -108,6 +108,7 @@ start = 5, end = 6, mid = (5 + 6) / 2가 됩니다.
 이렇게 되면 start와 end가 5로 같아지기에 알고리즘이 끝나고 end를 리턴 받게 됩니다.   
 
 #Upper_bound코드
+```c
 int upper_bound(int* arr, int key, int size) {
 	int s = 0, e = size, m;
 
@@ -119,3 +120,4 @@ int upper_bound(int* arr, int key, int size) {
 	
 	return e;
 }
+```
