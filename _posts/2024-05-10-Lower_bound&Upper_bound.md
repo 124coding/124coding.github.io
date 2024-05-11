@@ -4,14 +4,12 @@ title:  "Lower_bound, Upper_bound"
 categories: algorithm
 ---
 
-Lower_bound, Upper_bound 개념
--------------
+# Lower_bound, Upper_bound 개념
 Lower_bound는 key 이상의 값이 나오는 최초 위치를 구하는 탐색 방법이고   
 Upper_bound는 key값을 초과하는 최초 위치를 구하는 탐색 방법입니다.   
 Lower_bound와 Upper_bound는 이진 탐색을 기본으로 하기에 배열이 정렬이 되어 있어야 합니다.   
 
-Lower_bound
--------------
+# Lower_bound
 Lower_bound의 예시를 들면
 * 입력
 ```
@@ -47,7 +45,7 @@ Lower_bound의 예시를 들면
   8
 ```
 
-#Lower_bound 과정 시각화
+## Lower_bound 과정 시각화
 위의 과정 중 1번째 과정을 시각화하겠습니다.   
 처음 start = 0, end = 8, mid = (8 + 0) / 2를 갖습니다.   
 ![캡처](https://github.com/124coding/124coding.github.io/assets/114299892/26047666-e414-45e7-a599-13cac63bf846)   
@@ -63,7 +61,7 @@ start = 3, end = 4, mid = (3 + 4) / 2
 6은 key값과 같기에 end = mid가 됩니다.   
 이렇게 되면 start와 end가 3으로 같아지기에 알고리즘이 끝나고 end를 리턴 받게 됩니다.   
 
-#Lower_bound코드
+## Lower_bound코드
 ```c
 int lower_bound(int* arr, int key, int size) {
 	int s = 0, e = size, m;
@@ -77,8 +75,7 @@ int lower_bound(int* arr, int key, int size) {
 }
 ```   
 
-Upper_bound
--------------
+# Upper_bound   
 Upper_bound의 예시를 들면   
 * 입력
 ```
@@ -92,7 +89,7 @@ Upper_bound의 예시를 들면
 ```
 값이 존재하는 경우를 제외하면 Lower_bound와 같은 리턴을 받습니다.   
 
-#Upper_bound 과정 시각화
+## Upper_bound 과정 시각화
 위의 과정을 시각화하면   
 처음 start = 0, end = 8, mid = (8 + 0) / 2를 갖습니다.   
 ![캡처](https://github.com/124coding/124coding.github.io/assets/114299892/26047666-e414-45e7-a599-13cac63bf846)   
@@ -108,7 +105,7 @@ start = 5, end = 6, mid = (5 + 6) / 2가 됩니다.
 7은 key값보다 크기에 end = mid가 됩니다.   
 이렇게 되면 start와 end가 5로 같아지기에 알고리즘이 끝나고 end를 리턴 받게 됩니다.   
 
-#Upper_bound코드
+## Upper_bound코드
 ```c
 int upper_bound(int* arr, int key, int size) {
 	int s = 0, e = size, m;
