@@ -42,7 +42,8 @@ var c : Int? // null을 허용하는 변수
 위에서 var c : Int?를 작성했는데 Kotlin은 기본적으로 변수에 null값이 할당 되는 것을 막습니다. 이러한 특징으로 특정 변수에 null을 허용하게 해주고 싶다면 자료형 뒤에 ?를 붙여서 사용하게 됩니다.   
 
 ### Kotlin 기본 자료형
-자바와 거의 동일한 기본 자료형으로
+자바와 거의 동일한 기본 자료형입니다.   
+자료형을 굳이 명시해주지 않아도 Kotlin이 자료형을 자동으로 추론해줍니다.   
 #### 정수형   
 정수형의 리터럴은 10진수, 16진수, 2진수로 표기할 수 있습니다. (8진수 지원 X)
 ```
@@ -83,3 +84,71 @@ var stringValue : String = "Hello, World!"
 var multiLineStringValue : String = """Hello,
 World!""" // 여러 줄의 문자열
 ```
+### 형변환
+정수형, 실수형, char형에 대해서만 형변환이 가능합니다.   
+Kotlin은 명시적 형변환만 지원하고 암시적 형변환은 지원하지 않습니다.
+```
+toByte()
+toShort()
+toInt()
+toLong()
+toFloat()
+toDouble()
+toChar()
+
+ex)
+var a : Int = 1234
+var b : Double = a.toDouble()
+```
+## 배열
+Kotlin에서 배열 선언은 arrayOf함수를 통해 이루어집니다.   
+한번 배열 크기를 정하면 바꿀 수 없습니다.   
+```
+var arrInt = arrayOf(0, 1, 2, 3, 4)
+var arrIntNull = arrayOfNulls<Int>(5) // NULL값으로 채워진 배열로 이때에는 <자료형>이 필요
+var arrInt : Array<Int> = arrayOf(0, 1, 2, 3, 4) // 다른 변수들처럼 자료형을 명시해주는 방법도 가능
+
+arrInt[2] = 10 // arrInt = (0, 1, 10, 3, 4)
+println(arrInt[4]) // 4 출력
+```
+
+## 함수
+함수는 특정한 연산 혹은 결과값을 연산하는데 사용됩니다.   
+main()과 println()같은 것들도 모두 함수입니다.   
+```
+fun add(num1 : Int, num2 : Int) : Int{
+  return num1 + num2
+}
+
+fun anyFun(num : Any){} // Any는 어떤 자료형이든 상관없이 호환되는 Kotlin의 최상위 자료형
+```
+Kotlin에서 위처럼 작성되어 매개 변수의 자료형 표기를 다른 언어와 다르게 하고 반환받는 자료형을 함수 옆에 표기해주어야 합니다.   
+반환값이 없다면 반환받는 자료형을 생략해줘도 됩니다.
+### 단일 표현식 함수
+Kotlin은 단순한 계산과 같은 일만 하는 함수를 편하게 표현하기 위해 단일 표현식 함수를 사용할 수 있습니다.   
+```
+fun add(num1 : Int, num2 : Int) = num1 + num2 // 이때는 반환형의 타입 추론이 가능하여 반환받는 자료형을 써주지 않아도 됨
+```
+
+## 조건문과 비교 연산자
+### if-else
+```
+var a = 11
+var b = 10
+
+if(a == b){
+  println("a와 b는 같습니다.")
+} else {
+  println("a와 b는 다릅니다.")
+}
+```
+### when
+when은 다른 언어의 switch와 비슷한 역할을 합니다.
+```
+when(something){
+  1 -> println("1입니다.")
+  "Hi" -> println("Hi!")
+  is Long -> println("Long형 변수입니다.")
+  !is Long -> println("Long형 변수가 아닙니다.")
+  else -> println("아무것도 해당되지 않습니다.") // switch문의 default와 같음
+### 비교 연산자
