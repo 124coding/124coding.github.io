@@ -89,4 +89,52 @@ class Student(name:String, val studentId:Int) : Person(name){
     println("학번: ${studentId}")
   }
 }
+
+// Dog, Student 객체 생성
+var d = Dog("뽀삐", 2)
+var s = Student("김호창", 20242024)
+```
+
+### 오버라이딩
+super class의 함수와 같은 이름과 형태의 함수를 sub class에서 만들 수 없었는데 super class가 허용한다면 다시 구현할 수 있는데 이를 오버라이딩이라고 합니다.   
+오버라이딩할 함수를 open 키워드로 선언하고 sub class에서 override 키워드를 이용하여 오버라이드할 함수를 다시 구현할 수 있습니다.   
+
+### 오버라이딩 예시
+```kotlin
+open class Animal{
+  open fun eat(){
+    println("음식 먹기")
+  }
+}
+
+class Dog : Animal(){
+  override fun eat(){
+    println("개가 음식 먹기")
+  }
+}
+```
+
+### 추상화
+super class에서 함수의 구체적인 구현은 없고 단지 이 super class의 모든 sub class는 특정 함수가 반드시 있어야 한다는 점만 명시하여 각 sub class가 비어 있는 함수의 내용을 필요에 따라 구현하도록 만드는 것이 추상화입니다.   
+추상화는 선언부만 있고 기능이 구현되지 않은 추상함수 그리고 이를 포함하는 추상클래스로 구성됩니다.   
+추상클래스는 미완성 클래스로 단독으로는 객체를 만들 수 없습니다.   
+
+추상화는 다른 방법이 존재하는데 이는 interface입니다.   
+interface는 속성, 추상함수, 일반 함수를 갖습니다.   
+추상클래스와 interface의 다른 점은 추상클래스는 생성자를 가지지만 interface는 생성자가 없습니다.   
+interface에서 구현부가 있는 함수는 open 함수, 구현부가 없는 함수는 abstract 함수로 간주합니다.   
+
+```kotlin
+abstract class Animal{
+  abstract fun eat()
+  fun cry(){
+    println("웁니다.")
+  }
+}
+
+class Dog : Animal(){
+  override fun eat(){
+    prinln("개가 밥을 먹는다.")
+  }
+}
 ```
