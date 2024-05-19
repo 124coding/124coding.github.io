@@ -122,8 +122,10 @@ super class에서 함수의 구체적인 구현은 없고 단지 이 super class
 추상화는 다른 방법이 존재하는데 이는 interface입니다.   
 interface는 속성, 추상함수, 일반 함수를 갖습니다.   
 추상클래스와 interface의 다른 점은 추상클래스는 생성자를 가지지만 interface는 생성자가 없습니다.   
-interface에서 구현부가 있는 함수는 open 함수, 구현부가 없는 함수는 abstract 함수로 간주합니다.   
+interface에서 구현부가 있는 함수는 open 함수, 구현부가 없는 함수는 abstract 함수로 간주합니다. 그렇기에 별도의 키워드를 필요로 하지 않습니다.   
+주의점으로는 여러 인터페이스나 클래스가 같은 이름이나 형태를 가진 함수를 가지고 있다면 sub class에서 꼭 오버라이딩해줘야 합니다.   
 
+### 추상화 예시
 ```kotlin
 abstract class Animal{
   abstract fun eat()
@@ -135,6 +137,27 @@ abstract class Animal{
 class Dog : Animal(){
   override fun eat(){
     prinln("개가 밥을 먹는다.")
+  }
+}
+
+// interface 예시
+interface Animal{
+  fun cry(){
+    println("웁니다.")
+  }
+}
+
+interface Eater{
+  fun eat()
+}
+
+class Dog : Animal, Eater{
+  override fun cry(){
+    println("멍멍")
+  }
+
+  override fun eat(){
+    println("개가 밥을 먹는다.)
   }
 }
 ```
