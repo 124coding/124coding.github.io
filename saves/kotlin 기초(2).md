@@ -10,7 +10,7 @@ categories: study
 클래스는 인스턴스(객체)를 생성하기 위해 사용됩니다.   
 
 ### 클래스, 객체 생성
-```
+```kotlin
 // 클래스 생성
 class Person1(val name:String, val age:Int) // 속성만 가지는 클래스
 
@@ -38,16 +38,16 @@ b.introduce() // 자기소개 출력
 보조 생성자는 반드시 기본 생성자를 통해 속성을 초기화해줘야 합니다.   
 
 ### 생성자 예시
-```
+```kotlin
 class Person1(val name:String, val age:Int){
-  init(){
+  init{
     println("안녕하세요 저는 ${this.age}살인 ${this.name}입니다.")
   }
 }
 
 //보조 생성자
-class Person1(val name:String, val age:Int){
-  init(){
+class Person2(val name:String, val age:Int){
+  init{
     println("안녕하세요 저는 ${this.age}살인 ${this.name}입니다.")
   }
 
@@ -55,3 +55,38 @@ class Person1(val name:String, val age:Int){
     println("보조 생성자 사용")
   }
 }
+```
+
+### 클래스 상속
+상속이 필요한 경우는 2가지가 존재하는데   
+1번째는 이미 존재하는 클래스를 확장하여 새로운 속성이나 함수를 추가한 클래스를 만들고 싶을 때와   
+2번째는 클래스간 중복되는 속성이나 함수를 더 수월하게 관리하기 위함입니다.   
+속성과 함수를 물려주는 쪽을 super class, 물려받는 쪽을 sub class라고 합니다.   
+kotlin은 기본적으로 상속 불가이기에 클래스 앞에 open 키워드를 붙여줍니다.   
+
+상속은 2가지 규칙이 존재하는데   
+1번째 sub class는 super class에 존재하는 속성과 같은 이름의 속성을 가질 수 없고   
+2번째 sub class는 반드시 super class의 생성자를 호출해야 합니다.   
+
+```kotlin
+open class Animal(val name:String, var age:Int, val type:String){
+  fun introduce(){
+    println("이 동물의 이름은 ${this.name}이고 나이는 ${this.age}입니다.")
+  }
+}
+
+class Dog(name:String, age:Int) : Animal(name, age, "개"){
+  fun bark(){
+    println("멍멍")
+  }
+}
+
+// sub class의 매개 변수를 추가하는 예제
+open class Person(val name:String)
+
+class Student(name:String, val studentId:Int) : Person(name){
+  fun introduce(){
+    println("학번: ${studentId}")
+  }
+}
+```
