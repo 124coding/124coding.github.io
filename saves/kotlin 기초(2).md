@@ -339,6 +339,9 @@ book1.let {
 오브젝트는 오브젝트의 이름을 직접 참조연산자로 붙여 속성이나 함수를 사용하게 됩니다.   
 오브젝트로 생성된 객체는 최초 사용시 자동으로 생성되며 이후에는 코드 전체에서 공용으로 사용가능하기에 공통적으로 사용할 내용은 오브젝트로 묶어 만드는 것이 효율적입니다.   
 
+특이하게도 클래스 내부에 오브젝트를 만들 수도 있습니다. 이는 Companion Object 클래스의 객체는 그대로 이용하면서 객체 간 공용으로 사용할 속성 및 함수를 별도로 만드는 기능입니다.   
+다른 언어들의 Static멤버와 비슷한 기능을 합니다.   
+
 *오브젝트 예시*
 ```kotlin
 object Counter{
@@ -350,6 +353,138 @@ object Counter{
 }
 
 Counter.countUp()
+
+// Companion Object 예시
+class Counter{
+  companion object{
+    var totalCount = 0 // 각 객체가 counting함수를 호출할때마다 1씩 증가하게 됨
+  }
+  var count = 0
+
+  fun counting(){
+    totalCount++
+    count++
+  }
+}
 ```
+
+# 옵저버 패턴
+**옵저버**란 이벤트 발생을 감시하는 감시자의 역할을 하는 것입니다.   
+함수로 직접 요청하지 않았지만 시스템 또는 루틴에 의해 발생하게 되는 동작들을 **이벤트**라고 부르며 이벤트 발생 시 즉각 처리할 수 있게 만드는 프로그래밍 패턴을 **옵저버 패턴**이라고 합니다.   
+이벤트의 ex) 키의 입력, 터치의 발생, 데이터 수신 등   
+
+옵저버 패턴의 구현에는 2개의 클래스를 필요로 하는데   
+1번째 이벤트를 수신하는 클래스   
+2번째 이벤트를 발생 및 전달하는 클래스   
+
+과정을 간략히 표현하면 2번째 클래스에서 이벤트가 발생했음을 알리고 1번째 클래스의 이벤트를 처리하는 함수를 호출하면 되는데 이는 문제가 존재하여 1번째 클래스가 2번째 클래스를 참조하는 것은 1번째 클래스에 2번째 클래스의 객체를 생성 후 사용하면 가능하지만 2번째 클래스가 1번째 클래스를 참조하는 것은 불가능하기때문에 이 사이에 인터페이스를 끼워넣어 2번째 클래스에서는 자신의 이벤트를 받는 인터페이스를 만들어 공개하고 1번째 클래스는 이를 구현하여 다시 넘겨주면 상호간의 호출이 가능하게 되고 이를 **옵저버 패턴**이라고 부르게 됩니다.
+이렇게 사용되는 인터페이스를 observer, 코틀린에서는 listner라고 부르며 이벤트를 넘겨주는 행위는 callback이라고 합니다.   
+
+*옵저버 패턴 예시*
+```kotlin
+interface EventListener{
+  fun onEvent(count:Int)
+}
+
+class Counter(var listener:EventListener){ // 이벤트가 발생되는 2번째 클래스의 역할, 이벤트 발생을 위해 생성자에서 EventListener를 속성으로 받음
+  fun count(){
+    for(i in 1..100){
+      if(i % 5 == 0) listener.onEvent(i)
+    }
+  }
+}
+
+class EventPrinter:EventListener{ // 이벤트를 받는 1번째 클래스의 역할, EventListener를 상속받음
+  override fun onEvent(count:Int){
+    print("${count}-")
+  }
+
+  fun start(){
+    val counter = Counter(this) // Counter클래스의 객체, this 키워드로 EventListener 구현부를 넘겨줌
+    counter.count()
+  }
+}
+```
+위의 예시에서 val counter = Count(this)를 보게 되면 this로 객체 자신을 넘겨주지만 받는 쪽에서 EventListener만 원하기에 EventListener 구현부만 넘겨주게 됩니다. 이를 객체지향의 다형성이라고 합니다.   
+
+또한 EventPrinter가 EventListener를 상속받아 구현하지 않고 임시로 만든 별도의 EventListener 객체를 대신 넘겨주는 방법도 존재하는데 이를 이름 없는 객체, 즉 **익명 객체**라고 합니다.   
+
+*익명 객체 예시*
+```kotlin
+interface EventListener{
+  fun onEvent(count:Int)
+}
+
+class Counter(var listener:EventListener){
+  fun count(){
+    for(i in 1..100){
+      if(i % 5 == 0) listener.onEvent(i)
+    }
+  }
+}
+
+class EventPrinter{
+  fun start(){
+    val counter = Counter(object: EventListener { // object 키워드 후 이름 없이 EventListener를 상속 받도록 한 후 onEvent함수 override
+      override fun onEvent(count:Int){
+        print("${count}-")
+      }
+    })
+    counter.count()
+  }
+}
+```
+
+# 클래스의 다형성
+super class를 상속 받는 sub class가 있을때 sub class는 super class의 내용과 sub class의 내용을 둘 다 가지고 있는 것이기에 super class를 담는 변수에 sub class를 저장하면 super의 내용밖에 사용을 못하게 되고 sub class를 담는 변수에 저장하면 sub class의 내용을 모두 사용할 수 있게 되고 super class를 담는 변수에 sub class를 담는 행위를 상위자료형에 담는 것을 **Up-Casting**이라고 하고 Up-Casting된 자료형을 다시 하위자료형으로 변환하는 것을 **Down-Casting**이라고 합니다.   
+Up-Casting은 상위 자료형의 변수에 담기만 하면 되지만 Down-Casting은 별도의 연산자를 필요로 하는데 바로 **as, is** 연산자입니다.   
+
+as는 변수를 호환되는 자료형으로 변환해주는 캐스팅 연산자로 코드 내에서 사용 시 즉시 자료형을 변환해주며 이를 바로 변수에 할당해 줄 수 있고   
+is는 호환되는 자료형인지 먼저 체크한 후 변환해주는 캐스팅 연산자로 조건문 내에서 사용되는 특징이 있습니다.   
+
+*is, as 예시*
+```kotlin
+open class Car{
+  var name = "차"
+
+  open fun ride(){
+    println("&{name}을 탑니다.")
+  }
+}
+
+class SportsCar:Car(){
+  var type = "스포츠카"
+
+  override fun ride(){
+    println("${name}중에 ${type}을 탑니다.")
+  }
+
+  fun fast(){
+    println("빠르게 달립니다.")
+  }
+}
+
+var a = Car()
+a.ride() // "차를 탑니다." 출력
+
+var b:Car = SportsCar()
+b.ride() // "차중에 스포츠카를 탑니다." 출력
+b.fast() // X (b는 Car형 변수이기에 fast를 호출할 수 없음)
+```
+위의 예에서 b.fast()로 b가 Car형 변수임에도 fast를 호출하려 했는데 이를 가능케 하려면 is나 as를 통해 Down-Casting을 해주어야 합니다.   
+
+*Down-Casting 예시*
+```kotlin
+// 위의 예시 코드 사용
+if(b is SportsCar){ // is는 조건문 안에서만 잠시 Down-Casting
+  b.fast() // "빠르게 달립니다." 출력
+}
+
+var c = b as SportsCar
+c.fast() // "빠르게 달립니다." 출력
+b.fast() // "빠르게 달립니다." 출력 (이는 반환값 뿐만 아닌 변수 자체도 즉, b도 Down-Casting되기에 에러가 나지 않게 됨
+```
+
+# 제네릭
 
 #### 본 글은 유튜브 [**디모의 코틀린 강좌**](https://www.youtube.com/watch?v=8RIsukgeUVw&list=PLQdnHjXZyYadiw5aV3p6DwUdXV2bZuhlN)를 참고하여 작성하였습니다.
