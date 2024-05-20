@@ -164,7 +164,7 @@ class Dog : Animal, Eater{
 ```
 
 # 프로젝트 구조
-프로젝트는 kotlin에서 가장 큰 특이며 여러 개의 module로 이루어지고   
+프로젝트는 kotlin에서 가장 큰 틀이며 여러 개의 module로 이루어지고   
 module은 직접 만들 수도 있고 필요한 경우 이미 구현된 라이브러리 모듈을 가져와 붙일 수도 있기에 굉장히 편리한 기능 단위이며 파일이나 폴더가 들어갈 수 있고 kotlin 코드파일(.kt)뿐만 아닌 모듈과 관련된 설정 및 리소스 파일 등도 포함될 수 있습니다.   
 이러한 프로젝트, 모듈, 폴더 및 파일이 물리적인 구조를 담당합니다.   
 
@@ -200,7 +200,7 @@ val a = "패키지 스코프"
 
 fun main(){
   val a = "메인 스코프"
-  println(a) // 메인 스코프 출력
+  println(a) // "메인 스코프" 출력
 }
 ```
 
@@ -222,8 +222,37 @@ protected는 클래스 자신과 상속받은 클래스에서 접근이 가능�
 ~~internal~~은 클래스 스코프에서는 사용하지 않습니다.   
 
 # 고차함수와 람다함수
+## 고차함수
 **고차 함수**란 함수를 클래스에서 만들어 낸 객체처럼 취급하는 방법으로 함수를 매개 변수처럼 넘겨 줄 수도 있고 결과값으로 반환받을 수도 있는 방법입니다.   
 코틀린은 모든 함수를 고차함수로 사용 가능합니다.   
+함수를 인자로 받을때는 ::를 앞에 붙여주어야 합니다.   
 
 *고차함수 예시*
 ```kotlin
+fun hello(str:String){
+  println("$str 함수 hello")
+}
+
+fun helloPrint(function:(String)->Unit){ // function으로 함수를 매개 변수로 받고 이 함수의 매개 변수는 String이며 반환형이 없기에 Unit
+  function("helloPrint")
+}
+
+helloPrint(::hello) // "helloPrint 함수 hello" 출력
+```
+## 람다함수
+이때 위처럼 매개 변수로 넘길 함수는 따로 정의할 필요 없이 **람다 함수**를 이용하면 편하게 할 수 있습니다.   
+람다 함수는 함수를 람다식으로 표현하는 방법으로 람다 함수는 그 자체로 고차 함수이기에 별도의 연산자 없이 변수에 담을 수 있습니다.   
+
+*람다함수 예시*
+```kotlin
+fun helloPrint(function:(String)->Unit){ 
+  function("helloPrint")
+}
+
+val ramda1:(String)->Unit = { str -> println("$str 람다1") }
+helloPrint(ramda1) // "helloPring 람다" 출력
+
+val ramda2 = { str:String -> println("$str 람다2") } // ramda1과 같은 결과 이때, 타입 추론으로 반환형이 없는 형태임을 kotlin이 자동적으로 알게 됨
+helloPrint(ramda2)
+```
+
