@@ -486,5 +486,50 @@ b.fast() // "빠르게 달립니다." 출력 (이는 반환값 뿐만 아닌 변
 ```
 
 # 제네릭
+함수나 클래스를 선언할때 고정적인 자료형대신 실제 자료형으로 대체되는 타입 매개 변수를 받아 사용하는 방식을 **제네릭**이라고 합니다.   
+제네릭을 특정한 superclass를 상속받은 클래스 타입으로만 제한하려면 <T:superclass> 형태로 사용할 수 있습니다.   
+함수의 제네릭 ex) fun <T> genericFun(var param:T){}
+클래스 제네릭 ex) class GenericClass<T>() (이는 객체 생성시 타입을 수동으로 지정해주는 방법), class GenericClass<T>(var pref:T)
+
+*제네릭 예시*
+```kotlin
+open class Car{
+  open fun run(){
+    println("차가 달립니다.")
+  }
+}
+
+class SportsCar:Car(){
+  override fun run(){
+    println("스포츠카가 빠르게 달립니다.")
+  }
+}
+
+class Truck:Car(){
+  override fun run(){
+    println("트럭이 조심히 달립니다.")
+  }
+}
+
+class UsingGeneric<T:Car>(val c : T){ // Car로부터 상속받은 클래스로만 제한
+  fun doRun(){
+    c.run()
+  }
+}
+
+UsingGeneric(Car()).doRun() // "차가 달립니다." 출력
+UsingGeneric(SportsCar()).doRun() // "스포츠카가 빠르게 달립니다." 출력
+UsingGeneric(Truck()).doRun() // "트럭이 조심히 달립니다." 출력
+
+// 함수 제네릭
+fun <T:Car> doRun(t:T){
+  t.run()
+}
+
+doRun(Car())
+doRun(SportsCar())
+doRun(Truck())
+// 위와 출력은 같음
+```
 
 #### 본 글은 유튜브 [**디모의 코틀린 강좌**](https://www.youtube.com/watch?v=8RIsukgeUVw&list=PLQdnHjXZyYadiw5aV3p6DwUdXV2bZuhlN)를 참고하여 작성하였습니다.
