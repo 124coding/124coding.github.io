@@ -256,3 +256,23 @@ val ramda2 = { str:String -> println("$str 람다2") } // ramda1과 같은 결�
 helloPrint(ramda2)
 ```
 
+람다함수는 3가지 특별케이스가 존재하는데   
+1번째 람다함수도 일반 함수처럼 여러 구문을 사용할 수 있습니다.   
+2번째 매개 변수가 없는 람다함수는 실행할 구문만 나열하면 됩니다.   
+3번째 매개 변수가 하나라면 it을 사용합니다.   
+
+*람다 특별케이스 예시*
+```kotlin
+val ramda1 = { i:Int, j:Int ->
+  var k:Int
+  k = i + j
+  k += (i - j)
+  k // 가장 마지막 문구를 반환받게 됨
+}
+
+val ramda2 = { println("헬로") }
+
+val ramda3:(String) -> Unit = { println("$it 람다")}
+```
+# 스코프함수
+**스코프함수**는 기본 제공하는 함수들로 함수형 언어의 특징을 좀 더 편리하게 사용할 수 있는 장점이 있습니다.   
