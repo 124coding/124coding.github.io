@@ -276,3 +276,37 @@ val ramda3:(String) -> Unit = { println("$it 람다")}
 ```
 # 스코프함수
 **스코프함수**는 기본 제공하는 함수들로 함수형 언어의 특징을 좀 더 편리하게 사용할 수 있는 장점이 있습니다.   
+객체를 스코프함수로 전달하면 객체의 속성이나 함수를 편하게 불러 쓸 수 있으며   
+스코프함수로는 *apply, run, with, also, let* 5가지가 존재합니다.   
+
+apply는 객체를 생성 후 변수에 담기 전 초기화 과정에서 많이 사용됩니다.   
+apply를 이용하여 객체에 람다함수를 하나 만들어 참조연산자(.)없이 바로 속성이나 함수를 사용가능합니다.   
+이렇게 생성되자마자 조작된 객체를 바로 변수에 넣어줄 수 있게 됩니다.   
+
+*apply 예시*
+```kotlin
+class Book(var name: String, var price: Int){
+  fun discount(){
+    price -= 2000
+  }
+}
+
+var book1 = Book("나의 책", 20000).apply{
+  name = "(세일)" + name
+  discount()
+}
+```
+
+run은 apply처럼 스코프 안에서 참조연산자를 사용하지 않아도 되는 점은 같지만 일반 람다함수와 같이 마지막 구문을 반환받는다는 차이점이 존재합니다.   
+이미 객체가 만들어진 후 객체의 함수나 속성을 스코프 내에서 사용해야할때 유용합니다.   
+
+*run 예시*
+```kotlin
+// 위의 apply예시 코드가 있다고 생각
+
+book1.run {
+  println("상품명: ${name}, 가격: ${price}원")
+}
+
+println(book1.run { price }) // 극단적인 run 예시
+```
