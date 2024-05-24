@@ -97,6 +97,46 @@ a?.run{
 1번째 내용의 동일성 이는 변수 a, b가 있을시 둘 다 1이라는 값을 가진다면 이는 동일하다고 판단하는 것으로 ==을 이용합니다.   
 2번째 객체의 동일성 이는 서로 다른 변수가 메모리 상에 같은 객체를 가리키면 동일하다고 판단하는 것으로 ===을 이용합니다.   
 이 중 내용의 동일성은 자동으로 판단되는 것이 아닌 코틀린의 모든 클래스가 내부적으로 상속받는 최상위 클래스 Any의 equals() 함수가 반환하는 Boolean값으로 판단합니다.   
-개발자가 커스텀 class를 만들때는 
+개발자가 커스텀 class를 만들때는 equals()를 상속받아 동일성을 확인해주는 구문을 별도 작성해줘야합니다.   
+
+*동일성 체크 예시*
+```kotlin
+class Car(val name:String, val price:Int){
+  override fun equals(otherCar:Any?):Boolean{
+    if(otherCar is Car){
+      return otherCar.name == name && otherCar.price == price
+    }
+    else return false
+  }
+}
+
+val a = Car("카", 200)
+val b = Car("카", 200)
+val c = a
+val d = Car("스포츠카", 2000)
+
+println(a == b) // ture 출력
+println(a === b) // false 출력
+
+println(a == c) // ture 출력
+println(a === c) // ture 출력
+
+println(a == d) // false 출력
+println(a === d) // false 출력
+```
+
+# 함수의 여러 기능
+kotlin 또한 함수의 오버로딩이 지원되고 있는데 오버로딩이랑 같은 스코프 내에 함수 이름이 같더라도 받는 매개 변수가 다를 시(매개 변수 개수, 매개 변수 자료형의 차이) 이를 다른 함수로 취급해줄 수 있는 것입니다.   
+특이한 경우 default argument를 이용하는데 이는 인자 부분을 받지 않았을 때도 미리 정의된 인자로 함수를 수행하는 것을 말합니다. 이때 인자는 매개 변수 순서대로 받게 됩니다.      
+이때 여러 개의 인자를 받는데 중간의 인자를 건너 뛰어서 받고 싶다면 named argument를 이용할 수 있습니다.   
+여러 개의 같은 타입의 인자를 받고 싶은 경우에는 직접 하나, 하나 작성할 수도 있겠지만 variable number of arguments를 사용할 수도 있습니다. 이때 variable number of arguments는 다른 매개 변수들과 같이 사용 시 맨 뒤에 위치해야 합니다.   
+함수를 
+
+*함수의 여러 기능 예시*
+```kotlin
+// 오버로딩
+
+
+// default argument
 
 #### 본 글은 유튜브 [**디모의 코틀린 강좌**](https://www.youtube.com/watch?v=8RIsukgeUVw&list=PLQdnHjXZyYadiw5aV3p6DwUdXV2bZuhlN)를 참고하여 작성하였습니다.
