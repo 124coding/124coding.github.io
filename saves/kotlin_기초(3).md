@@ -264,4 +264,6 @@ for((a, b) in list){ // 내부적으로 component1(), component2()를 사용
   println("${a}, ${b}") // 아리, 20 , 나미, 21 출력
 }
 ```
+
+2. Enum class로 이는 열거형
 #### 본 글은 유튜브 [**디모의 코틀린 강좌**](https://www.youtube.com/watch?v=8RIsukgeUVw&list=PLQdnHjXZyYadiw5aV3p6DwUdXV2bZuhlN)를 참고하여 작성하였습니다.
