@@ -130,13 +130,138 @@ kotlin 또한 함수의 오버로딩이 지원되고 있는데 오버로딩이�
 특이한 경우 default argument를 이용하는데 이는 인자 부분을 받지 않았을 때도 미리 정의된 인자로 함수를 수행하는 것을 말합니다. 이때 인자는 매개 변수 순서대로 받게 됩니다.      
 이때 여러 개의 인자를 받는데 중간의 인자를 건너 뛰어서 받고 싶다면 named argument를 이용할 수 있습니다.   
 여러 개의 같은 타입의 인자를 받고 싶은 경우에는 직접 하나, 하나 작성할 수도 있겠지만 variable number of arguments를 사용할 수도 있습니다. 이때 variable number of arguments는 다른 매개 변수들과 같이 사용 시 맨 뒤에 위치해야 합니다.   
-함수를 
+함수를 연산자처럼 쓸 수 있는 infix function도 있습니다. 이때 클래스 안에서 infix 함수가 선언되면 적용할 클래스가 자기 자신이므로 클래스 이름은 작성하지 않습니다.   
+위의 여러 기능들은 예시에서 더 자세히 다루겠습니다.   
 
 *함수의 여러 기능 예시*
 ```kotlin
 // 오버로딩
+fun read(x:Int){
+  println("숫자 ${x}입니다.")
+}
 
+fun read(x:String){
+  println(x)
+}
+
+read(7) // "숫자 7입니다." 출력
+read("문자열입니다.") // "문자열입니다." 출력
 
 // default argument
+fun read(x:Int = 1){
+  println("숫자 ${x}입니다.")
+}
 
+read() // "숫자 1입니다." 출력
+read(2) // "숫자 2입니다." 출력
+
+// named argument
+fun read(x:Int = 1, y:Int = 2, z:Int = 3){
+  println("숫자 ${x}, ${y}, ${z}입니다.")
+}
+
+read(2, z = 10) // "숫자 2, 2, 10입니다." 출력
+
+// variable number of argbuments
+fun read(vararg x:Int){
+  print("숫자 ")
+  for(i in x) {
+    print("${i} ")
+  }
+  println("입니다.")
+}
+
+read(1, 2, 3, 4) // "숫자 1 2 3 4 입니다." 출력
+
+//infix function
+infix fun Int.add(x:Int):Int = this + x
+
+class Number{
+  var data = 0
+  infix fun add(x:Int){
+    this.data += x
+  }
+}
+
+println(5 add 7) // 12 출력 (이때 5는 this인 객체 자신이고 7은 x입니다.
+
+val num = Number()
+num.add 10
+num.add 5
+println(num.data)
+```
+
+# 중첩 클래스, 내부 클래스
+**중첩 클래스**는 클래스 내부에 다른 클래스가 정의되는 것이고 **내부 클래스**는 클래스 내부에 존재한다는 것은 같지만 독립적으로 객체를 생성할 수 없고 외부 클래스의 속성과 함수의 이용이 가능합니다.   
+다시 말해 중첩 클래스는 클래스 내부에 전혀 별도의 클래스가 존재하는 것이고 내부 클래스는 클래스 내부에 그 클래스에 의존적인 다른 클래스가 존재하는 것입니다.   
+
+*중첩 클래스, 내부 클래스 예시*
+```kotlin
+class Outer {
+  var text = "Outer class"
+
+  class Nested{
+      fun introduce(){
+        println("Nested Class")
+      }
+  }
+
+  inner class Inner{
+    var text = "Inner Class"
+    fun introduceInner(){
+        println(text)
+    }
+    fun introduceOuter(){
+        println(this@Outer.text) // Outer클래스와 Inner클래스에 같은 이름의 속성이 존재한다면 this@Outerd클래스이름 으로 참조함 
+    }
+  }
+}
+
+Outer.Nested().introduce() // "Nested Class" 출력
+val outer = Outer()
+val inner = outer.Inner()
+
+inner.introduceInner() // "Inner Class" 출력
+inner.introduceOuter() // "Outer Class" 출력
+
+outer.text = "Change Outer Class"
+inner.introduceOuter() // "Change Outer Class" 출력
+```
+
+# 특별한 기능을 가진 클래스
+1. Data Class로 이는 데이터를 다루는데 최적화된 클래스로 5가지 기능이 있습니다.   
+(1) 내용의 동일성을 판단하는 equals()의 자동구현   
+(2) 고유한 코드를 생성하는 hashcode()의 자동구현   
+(3) 속성을 보기쉽게 나타내는 toString()의 자동구현   
+(4) 객체를 복사하여 새 객체를 만드는 copy()의 자동구현   
+(5) 속성을 순서대로 반환하는 componentX()의 자동구현 ex) component1(), component2()   
+
+*Data Class예시*
+```kotlin
+class Person(val name:String, val age:Int)
+data class Data(val name:String, val age:Int)
+
+val a = Person("김호택", 21)
+
+println(a == Person("김호택", 21)) // false 출력
+println(a.hashCode()) // 제대로 구현 x
+println(a) // toString() 결괏값을 보기 위함, 제대로 구현 x
+
+val b = Data("박준범", 30)
+
+println(b == Data("박준범", 30)) // true 출력
+println(b.hashCode()) // hashcode값 출력
+println(b) // Data(name=박준범, age=30) 출력
+
+println(b.copy()) // Data(name=박준범, age=30) 출력
+println(b.copy("아리") // Data(name=아리, age=30) 출력
+println(b.copy(age = 20)) // Data(name=박준범, age=20) 출력
+
+// Component
+val list = listOf(Data("아리", 20), Data("나미", 21))
+
+for((a, b) in list){ // 내부적으로 component1(), component2()를 사용
+  println("${a}, ${b}") // 아리, 20 , 나미, 21 출력
+}
+```
 #### 본 글은 유튜브 [**디모의 코틀린 강좌**](https://www.youtube.com/watch?v=8RIsukgeUVw&list=PLQdnHjXZyYadiw5aV3p6DwUdXV2bZuhlN)를 참고하여 작성하였습니다.
