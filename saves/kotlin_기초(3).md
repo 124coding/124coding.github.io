@@ -406,4 +406,73 @@ val names = listOf("a", "b", "c", "d")
 
 println(names zip numbers) // [(a, 10), (b, 5), (c, 20), (d, -4)] 출력
 ```
+
+# 변수의 고급 기술
+var은 한번 객체가 할당되도 다시 객체를 할당할 수 있고 val은 한번 객체가 할당되면 다시 객체를 할당할 수 없는 차이가 있었습니다. 하지만 주의할 점은 val은 할당된 객체를 바꿀 수 없을 뿐이지 객체 내부의 속성을 변경할 수 없는 것은 아닙니다.   
+하지만 절대 변경이 되지 않는 **상수**라는 개념도 존재합니다.   
+상수는 컴파일 시점에 결정되어 절대 바꿀 수 없는 값인데 선언은 val앞에 const를 붙여 사용합니다. 상수는 기본 자료형만 선언가능하며 런타임에 생성 가능한 일반적인 다른 클래스의 객체들은 담을 수 없습니다. 상수는 클래스의 속성이나 지역 변수로는 사용이 불가하기에 compaion object안에 선언하여 객체의 생성과 관계없이 클래스와 관계된 고정적인 값으로만 사용해야 합니다.   
+상수의 이름은 이례적으로 대문자와 언더바(_)만을 이용하여 만듭니다.   
+변수를 이용하지 않고 상수를 이용하게 되는 이유는 상수를 통해 고정적으로 사용될 값을 객체의 생성없이 메모리에 값을 고정하여 사용함으로서 성능을 향상시키기 위해서입니다.   
+
+*상수 예시*
+```kotlin
+class Restaurant{
+  companion object{
+    const val CREAM_PASTA = "크림 파스타"
+    const val STEAK = "스테이크"
+  }
+
+  fun searchPrice(foodName:String){
+    val price = when(foodName){
+      CREAM_PASTA -> 15000
+      STEAK -> 30000
+      else -> 0
+    }
+    println("${foodName}의 가격은 ${price}입니다.")
+  }
+}
+
+val restaurant = Restaurant()
+restaurant.searchPrice(Restaurant.CREAM_PASTA) // "크림 파스타의 가격은 15000입니다." 출력
+restaurant.searchPrice(Restaurant.STEAK) // "스테이크의 가격은 30000입니다." 출력
+```
+
+이제는 **늦은 초기화**에 대해서 설명하겠습니다. kotlin은 기본적으로 변수 선언 시 자료형만 지정해두고 초기화를 하지 않는 것은 컴파일이 되지 않지만 경우에 따라 변수에 객체를 할당 하는 것을 선언과 동시에 할 수 없을 때도 있습니다.
+이때는 일단 변수 앞에 lateinit 키워드를 이용하여 일단 변수만 선언하고 초기값은 나중에 할당 받을 수 있게 할 수 있습니다.   
+이렇게 선언된 변수는 초기값 할당 전까지는 이용이 불가하며 기본 자료형(String 제외)에는 사용이 불가합니다.   
+::변수.isInitialized로 초기화가 되었는지 확인하여 사용이 가능하므로 오류를 막을 수 있습니다.   
+
+*늦은 초기화 예시*
+```kotlin
+class LateInitSample{
+  lateinit var text:String
+
+  fun getLateInitText():String{
+    if(::text.isInitialized) { return text }
+    else { return "default" }
+  }
+}
+
+val a = LateInitSample()
+println(a.getLateInitText()) // "default" 출력
+a.text = "new value"
+println(a.getLateInitText()) // "new value" 출력
+```
+
+변수를 사용하는 시점까지 초기화를 자동으로 늦춰주는 **지연 대리자 속성**이라는 것도 존재합니다.   
+이는 lateinit과 달리 by라는 키워드를 사용하여 lazy라는 람다함수 형태의 초기화 함수를 사용하는 형태로 코드에서는 선언 시 즉시 객체를 할당 및 변수를 초기화하는 형태를 가지지만 실제 실행시에는 그 변수를 사용하는 시점에 초기화가 진행되게 됩니다.   
+이렇기에 코드의 실행을 최적화 할 수 있다는 장점이 있습니다.   
+람다함수에 의한 초기화이기에 여러 개의 구문이 들어갈 수 있고 맨 마지막 구문이 변수의 값이 됩니다.   
+
+*지연 대리자 속성 예시*
+```kotlin
+val number:Int by lazy{
+  println('초기화")
+  3
+}
+println("코드 시작") // 가장 먼저 "코드 시작" 출력
+println(number) // "초기화" 출력 후 3 출력
+println(number) // 3만 출력 (이미 number 변수가 3으로 초기화되었기 때문)
+```
+
 #### 본 글은 유튜브 [**디모의 코틀린 강좌**](https://www.youtube.com/watch?v=8RIsukgeUVw&list=PLQdnHjXZyYadiw5aV3p6DwUdXV2bZuhlN)를 참고하여 작성하였습니다.
