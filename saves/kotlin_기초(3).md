@@ -265,5 +265,76 @@ for((a, b) in list){ // 내부적으로 component1(), component2()를 사용
 }
 ```
 
-2. Enum class로 이는 열거형
+2. Enum class로 이는 enum class 내의 상태를 나타내기 위한 여러 객체를 이름을 붙여 여러개 생성해두고 그 중 하나를 선택하여 나타내기 위한 클래스로 이는 관행적으로 모두 대문자로 기술합니다.
+또한 enum의 객체들은 고유한 속성을 가질 수 있는데요. enum class의 생성자에 속성을 받도록하면 객체 선언 시 속성도 설정할 수 있습니다.
+일반 클래스처럼 함수도 설정할 수 있는데 이때는 객체의 선언이 끝나는 부분에 세미콜론(;)을 추가하여 함수를 기술할 수 있습니다.
+말로만 들으면은 감이 잘 안오실테니 예시를 보시죠.
+
+*Enum Class 예시*
+```kotlin
+enum class State(val message:String){
+  SING("노래부르기"),
+  EAT("밥먹기"),
+  SLEEP("잠자기"); // 객체들 열거
+
+  fun isSleeping() = this == State.SLEEP // 비교 대상이 State 객체 자기자신이므로 this로 비교
+}
+
+var state = State.SING
+println(state) // SING 출력
+
+state = State.SLEEP
+println(state.isSleeping()) // true 출력
+
+state = State.EAT
+println(state.message) // "밥먹기" 출력
+```
+
+# SET, MAP
+1. Set은 리스트와 달리 순서가 없으며 중복이 허용되지 않는 컬렉션입니다. 이로 인해 Set은 인덱스로 위치를 지정하여 객체를 참조할 수는 없으며 contains()를 이용하여 객체가 Set안에 존재하는지만 확인하는 식으로만 사용합니다.
+Set또한 리스트와 마찬가지로 그냥 Set과 MutableSet이 존재합니다. 이 또한 객체의 추가, 삭제가 가능한지 여부에 따라 선택되어 사용됩니다.
+MutableSet의 추가는 add(), 삭제는 remove()를 사용합니다.
+
+*Set 예시*
+```kotlin
+val a = mutableSetOf(1, 2, 3)
+
+for (num in a){
+  println(num) // 1, 2, 3 출력
+}
+
+a.add(4)
+println(a) // 1, 2, 3, 4 출력
+
+a.remove(3)
+println(a) // 1, 2, 4 출력
+
+println(a.contains(2)) // true 출력
+```
+
+2.Map은 객체를 넣을때 key값도 같이 넣어주는 컬렉션입니다. 이러한 구조로 Map은 특정 값을 찾을때 객체의 위치가 아닌 고유한 key를 통해 객체를 참조하는 특징을 가집니다. 이때 같은 key에 다른 객체를 넣게 되면 기존의 객체가 대체되기에 주의가 필요합니다.   
+Mat또한 그냥 Map과 MutableMap이 존재합니다. MutableMap의 추가는 put(key, value), 삭제는 remove(key)로 하게 됩니다.   
+
+*Map 예시*
+```kotlin
+val a = mutableMapOf(1 to "사과",
+                     2 to "바나나",
+                     3 to "파인애플") // key와 value를 to로 이어줌
+  
+for(entry in a){
+  println("${entry.key} : ${entry.value}")
+}
+  
+a.put(4, "귤")
+println(a) // {1=사과, 2=바나나, 3=파인애플, 4=귤} 출력
+  
+a.remove(3)
+println(a) // {1=사과, 2=바나나, 4=귤} 출력
+
+println(a[1]) // "사과" 출력
+```
+
+# 컬렉션 함수
+
+
 #### 본 글은 유튜브 [**디모의 코틀린 강좌**](https://www.youtube.com/watch?v=8RIsukgeUVw&list=PLQdnHjXZyYadiw5aV3p6DwUdXV2bZuhlN)를 참고하여 작성하였습니다.
