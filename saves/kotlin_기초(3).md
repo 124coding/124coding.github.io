@@ -372,10 +372,38 @@ println(l.count{ it.length == 3 }) // 3 출력
 
 10. associateBy 이는 아이템에서 key를 추출하여 map으로 변환하는 함수입니다.
 11. groupBy 이는 아이템에서 key로 정한 값이 같은 객체끼리 배열을 value로 하는 map을 만드는 함수입니다.   
-12. partition 이는 아이템에 조건을 걸어 true인지 false인지에 따라 2개의 컬렉션으로 나눠주는 함수입니다. 두 컬렉션은 두 객체를 담을 수 있는 Pair라는 클래스 객체로 반환되므로 각각의 컬렉션을 first, second로 참조하여 사용하거나 변수 이름을 괄호 안에 2개 선언하여 직접 받는 방법도 있습니다.
-위 3개의 함수는 복잡하기에 예시를 보면 이해가 더 쉬우실 겁니다.
+12. partition 이는 아이템에 조건을 걸어 true인지 false인지에 따라 2개의 컬렉션으로 나눠주는 함수입니다. 두 컬렉션은 두 객체를 담을 수 있는 Pair라는 클래스 객체로 반환되므로 각각의 컬렉션을 first, second로 참조하여 사용하거나 변수 이름을 괄호 안에 2개 선언하여 직접 받는 방법도 있습니다.   
+13. flatMap 이는 중괄호 안에서 아이템마다 새로운 컬렉션을 생성하면 이를 하나의 컬렉션으로 묶어주는 함수입니다.   
+14. getOrElse 이는 괄호 안의 인덱스에 객체가 존재하면 해당 객체를 반환받거나 그렇지 않으면 중괄호 내의 객체를 반환 받는 함수입니다.   
+15. zip 이는 두 컬렉션의 아이템을 1:1로 매칭하여 새 컬렉션을 만들어주는 함수입니다.   
+
+위 함수들은 복잡하기에 예시를 보면 이해가 더 쉬우실 겁니다.
 
 *컬렉션 함수 예시2*
 ```kotlin
+data class Person(val name:String, val birthYear:Int)
 
+val personList = listOf(Person("유나", 1992),
+                        Person("조이", 1996),
+                        Person("츄", 1999),
+                        Person("유나", 2003))
+
+println(personList.associateBy{ it.birthYear }) // {1992=Person(name=유나, birthYear=1992), 1996=Person(name=조이, birthYear=1996), 1999=Person(name=츄, birthYear=1999), 2003=Person(name=유나, birthYear=2003)} 출력
+
+println(personList.groupBy{ it.name }) // {유나=[Person(name=유나, birthYear=1992), Person(name=유나, birthYear=2003)], 조이=[Person(name=조이, birthYear=1996)], 츄=[Person(name=츄, birthYear=1999)]} 출력
+
+val(over98, under98) = personList.partition { it.birthYear > 1998 }
+println(over98) // [Person(name=츄, birthYear=1999), Person(name=유나, birthYear=2003)] 출력
+println(under98) // [Person(name=유나, birthYear=1992), Person(name=조이, birthYear=1996)] 출력
+
+val numbers = listOf(10, 5, 20, -4)
+
+println(numbers.flatMap{ listOf(it * 10, it + 10) }) // [100, 20, 50, 15, 200, 30, -40, 6] 출력
+println(numbers.getOrElse(1){ 50 }) // 5 출력
+println(numbers.getOrElse(10){ 50 }) // 50 출력
+
+val names = listOf("a", "b", "c", "d")
+
+println(names zip numbers) // [(a, 10), (b, 5), (c, 20), (d, -4)] 출력
+```
 #### 본 글은 유튜브 [**디모의 코틀린 강좌**](https://www.youtube.com/watch?v=8RIsukgeUVw&list=PLQdnHjXZyYadiw5aV3p6DwUdXV2bZuhlN)를 참고하여 작성하였습니다.
