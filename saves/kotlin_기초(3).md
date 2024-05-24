@@ -335,6 +335,47 @@ println(a[1]) // "사과" 출력
 ```
 
 # 컬렉션 함수
+**컬렉션 함수**는 컬렉션 또는 배열에 일반 함수 또는 람다 함수 형태를 사용하여 for문 없이도 아이템을 순회하며 참조하거나 조건을 걸고, 구조의 변경까지 가능한 여러가지 함수를 지칭합니다.   
+1. forEach 이는 중괄호 안에서 it이라는 변수로 순서대로 참조가 가능한 함수입니다.   
+2. filter 이는 중괄호 안에서 특정 조건에 맞춰서 새로운 컬렉션이나 배열로 만들어주는 함수입니다.   
+3. map 이는 중괄호 안에서 수식을 적용하여 값을 변경해줄 수 있는 함수입니다.   
+4. any 이는 중괄호 안의 수식에 대해 컬렉션 내의 객체들이 하나라도 맞으면 true를 반환해주는 함수입니다.   
+5. all 이는 any와 비슷하지만 모든 컬렉션 내의 객체들이 맞아야 true를 반환해주는 함수입니다.   
+6. none 이는 all의 반대로 하나도 맞지 않아야 true를 반환해주는 함수입니다.
+7. first 이는 컬렉션의 첫번째 객체를 반환해주지만 중괄호 내의 조건을 걸면 조건이 맞는 첫번째 객체를 반환해줍니다. find로 대체가 가능합니다.   
+8. last는 first의 반대로 마지막을 반환합니다. findLast로 대체가 가능합니다.   
+이때 first, last는 문제가 있을 수 있는데 컬렉션이 비어있거나 조건을 줬을때 조건에 맞는 객체가 없는 경우입니다. (NoSuchElementException)   
+이럴때는 firstOrNull, lastOrNull을 사용하면 객체가 없는 경우 null을 반환해 줍니다.   
+9. count 이는 컬렉션의 모든 아이템의 개수를 반환하거나 중괄호 내에 조건을 걸어주면 조건에 맞는 아이템의 개수를 반환합니다.
 
+*컬렉션 함수 예시1*
+```kotlin
+val l = listOf("모니터", "키보드", "마우스")
+
+l.forEach{ print(it + " ") } // 모니터, 키보드, 마우스 출력
+println()
+
+println(l.filter{it.startsWith("모")}) // [모니터] 출력
+
+println(l.map{ "부품 : " + it }) // [부품 : 모니터, 부품 : 키보드, 부품 : 마우스] 출력
+
+println(l.any{ it == "스피커" }) // false 출력
+
+println(l.filter{ it == "모니터" }.all{ it == "모니터" }) // true 출력
+
+println(l.none{ it.length == 4 }) // true 출력
+
+println(l.first{ it.endsWith("스") }) // 마우스 출력
+
+println(l.count{ it.length == 3 }) // 3 출력
+```
+
+10. associateBy 이는 아이템에서 key를 추출하여 map으로 변환하는 함수입니다.
+11. groupBy 이는 아이템에서 key로 정한 값이 같은 객체끼리 배열을 value로 하는 map을 만드는 함수입니다.   
+12. partition 이는 아이템에 조건을 걸어 true인지 false인지에 따라 2개의 컬렉션으로 나눠주는 함수입니다. 두 컬렉션은 두 객체를 담을 수 있는 Pair라는 클래스 객체로 반환되므로 각각의 컬렉션을 first, second로 참조하여 사용하거나 변수 이름을 괄호 안에 2개 선언하여 직접 받는 방법도 있습니다.
+위 3개의 함수는 복잡하기에 예시를 보면 이해가 더 쉬우실 겁니다.
+
+*컬렉션 함수 예시2*
+```kotlin
 
 #### 본 글은 유튜브 [**디모의 코틀린 강좌**](https://www.youtube.com/watch?v=8RIsukgeUVw&list=PLQdnHjXZyYadiw5aV3p6DwUdXV2bZuhlN)를 참고하여 작성하였습니다.
