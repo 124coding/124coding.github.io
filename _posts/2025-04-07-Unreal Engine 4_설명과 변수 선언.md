@@ -21,21 +21,21 @@ categories: study
 이는 디자이너가 주로 이용하게 됩니다.  
 
 # C++ 클래스 생성하기
-![alt text](images/image.png)  
+![Image](https://github.com/user-attachments/assets/d166db7e-f2a0-4709-b195-4f4d494101b0)  
 언리얼 엔진 프로젝트를 생성하고 왼쪽 위의 파일 탭을 누르면 다음과 같은 창이 나오는데 이때 새로운 C++ 클래스를 선택해줍니다.  
 
-![alt text](images/image-1.png)  
+![Image](https://github.com/user-attachments/assets/9cf946e0-56fe-4a68-b8d3-73c683b571ea)  
 선택을 해주게 되면 부모 클래스를 선택할 수 있는데 부모 클래스를 선택하면 선택한 부모 클래스의 변수와 함수를 상속받아 사용할 수 있게 됩니다.  
 언리얼 엔진 내부에서 미리 구현한 클래스들이 보이게 되고 Actor 클래스를 선택하여 진행하도록 하겠습니다.  
 
-![alt text](images/image-2.png)  
+![Image](https://github.com/user-attachments/assets/519f15bb-3d3f-405f-add4-179a3e9c7081)  
 클래스를 생성하면 VS가 열리고 이 VS에서 확인해보면 Actor의 소스 파일(.cpp), 헤더 파일(.h) 파일이 생성되게 됩니다.  
 헤더 파일은 클래스를 선언하고, 클래스에 속하는 변수와 함수의 원형을 선언하는 용도의 파일이고 소스 파일은 헤더 파일에서 선언된 함수의 몸체를 구현하는 역할입니다.  
 
-![alt text](images/image-3.png)  
+![Image](https://github.com/user-attachments/assets/c54feeaa-9866-4c72-acd1-96313a6939ef)  
 *헤더 파일*  
 
-![alt text](images/image-4.png)  
+![Image](https://github.com/user-attachments/assets/2f61bda1-60f4-40a7-8708-317537987a09)  
 *소스 파일*  
 
 헤더 파일을 보게 되면 클래스 이름과 같은 이름을 가진 생성자, BeginPlay 그리고 Tick 함수가 생성됩니다.  
@@ -134,13 +134,13 @@ UPROPERTY(VisibleanyWhere, BlueprintReadOnly, Category = "test")
 FString test_string = TEXT("test_string");
 ```
 
-![alt text](images/image-5.png)  
+![Image](https://github.com/user-attachments/assets/90d86c43-d003-4821-aabb-9ab009c0b064)  
 Test_int 프로퍼티는 수정가능하지만 Test_String 프로퍼티는 수정불가함을 확인 가능합니다.  
 
 ## 생성자에서 변수 기본 값 설정
 위에서 클래스 이름과 같은 생성자가 존재한다고 하였는데 이 생성자에서 변수의 기본 값 설정이 가능합니다.  
 소스 파일로 넘어가서 클래스 이름 앞에 A가 붙은 생성자가 보일 것입니다.  
-![alt text](images/image-6.png)  
+![Image](https://github.com/user-attachments/assets/7e39da33-f843-4b27-b8b0-c9967ae2f4fe)  
 
 이때 초기값 설정법은 2가지가 있는데 첫번째는 생성자 옆에 콜론을 입력하여 프로퍼티의 이름을 적고 괄호에 기본 값을 넣는 것이고 두번째는 생성자의 바디에서 기본 값을 대입해주는 것입니다.  
 ```C++
@@ -157,4 +157,4 @@ Atest_actor::Atest_actor()
 }
 ```
 
-![alt text](image-7.png)  
+![Image](https://github.com/user-attachments/assets/4875e459-813c-4bd7-98a6-fa4ebf42318a)  
