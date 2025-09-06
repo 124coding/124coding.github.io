@@ -3,6 +3,7 @@ layout: single
 title:  "Lower_bound, Upper_bound"
 categories: algorithm
 tag: [baekjoon, c++]
+author_profile: false
 toc: true
 toc_sticky: true
 toc_label: 목차
