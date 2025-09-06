@@ -9,7 +9,7 @@ counts:
   - title: "Category"
     use: true
   - title: "Tag"
-    use: true
+    use: false
   # - title: "Sample Posts"
   #   url: /year-archive/
   # - title: "Sample Collections"
