@@ -1,10 +1,9 @@
 # main links
 main:
   - title: "Category"
-  url: /categories/
+    url: /categories/
   - title: "Tag"
-  url: /tags/
-
+    url: /tags/
 counts:
   - title: "Category"
     use: true
