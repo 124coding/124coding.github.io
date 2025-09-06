@@ -2,7 +2,7 @@
 layout: single
 title:  "Lower_bound, Upper_bound"
 categories: algorithm
-tags: baekjoon
+tag: [baekjoon, c++]
 ---
 
 # Lower_bound, Upper_bound 개념
