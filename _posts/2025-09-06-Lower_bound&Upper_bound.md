@@ -4,6 +4,7 @@ title:  "Lower_bound, Upper_bound"
 categories: algorithm
 tag: [baekjoon, c++]
 toc: true
+toc_sticky: true
 ---
 
 # Lower_bound, Upper_bound 개념
