@@ -4,6 +4,12 @@ main:
   url: /categories/
   - title: "Tag"
   url: /tags/
+
+counts:
+  - title: "Category"
+    use: true
+  - title: "Tag"
+    use: true
   # - title: "Sample Posts"
   #   url: /year-archive/
   # - title: "Sample Collections"
