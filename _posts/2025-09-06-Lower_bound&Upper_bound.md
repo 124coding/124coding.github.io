@@ -8,7 +8,7 @@ toc: true
 toc_sticky: true
 toc_label: 목차
 sidebar:
-    nav: "counts"
+  nav: "counts"
 ---
 
 # Lower_bound, Upper_bound 개념
